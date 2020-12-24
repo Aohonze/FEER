@@ -3,6 +3,11 @@
 # 确保脚本抛出遇到的错误
 set -e
 
+# 上传仓库
+git add .
+git commit -m "搜索组件更新"
+git push
+
 # 生成静态文件
 npm run build
 
@@ -14,6 +19,7 @@ cp /Users/wutengda/Documents/GitHub/FEER/README.md /Users/wutengda/Documents/Git
 
 # 如果是发布到自定义域名
 # tcb hosting:deploy ./ -e env-dbegretq
+
 
 # 推送到git-pages
 git init

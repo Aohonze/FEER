@@ -2,7 +2,7 @@
   <div class="pagination">
     <span
       class="prev iconfont icon-jiantou-zuo"
-      :class="{disabled: currentPage === 1}"
+      :class="{ disabled: currentPage === 1 }"
       @click="goPrex()"
     >
       <p>上一页</p>
@@ -14,14 +14,20 @@
         class="card-box"
         v-for="item in pages"
         :key="item"
-        :class="{active: currentPage === item}"
+        :class="{ active: currentPage === item }"
         @click="goIndex(item)"
-      >{{item}}</span>
+        >{{ item }}</span
+      >
     </div>
     <!-- 分页在5页以上 -->
     <div class="pagination-list" v-else>
       <!-- 一号位 -->
-      <span class="card-box" :class="{active: currentPage === 1}" @click="goIndex(1)">1</span>
+      <span
+        class="card-box"
+        :class="{ active: currentPage === 1 }"
+        @click="goIndex(1)"
+        >1</span
+      >
 
       <!-- 二号位 -->
       <span
@@ -34,42 +40,46 @@
       <span
         class="card-box"
         v-show="currentPage <= 3"
-        :class="{active: currentPage === 2}"
+        :class="{ active: currentPage === 2 }"
         @click="goIndex(2)"
-      >2</span>
+        >2</span
+      >
 
       <!-- 三号位 -->
       <span
         class="card-box"
-        :class="{active: currentPage >= 3 && currentPage <= (pages - 2)}"
+        :class="{ active: currentPage >= 3 && currentPage <= pages - 2 }"
         @click="goIndex(threeNum())"
-      >{{ threeNum() }}</span>
+        >{{ threeNum() }}</span
+      >
 
       <!-- 四号位 -->
       <span
         class="ellipsis ell-four"
-        v-show="currentPage < (pages - 2)"
+        v-show="currentPage < pages - 2"
         @click="goIndex(currentPage + 2)"
         title="下两页"
       />
       <span
         class="card-box"
-        v-show="currentPage >= (pages - 2)"
-        :class="{active: currentPage === pages-1}"
-        @click="goIndex(pages-1)"
-      >{{ pages-1 }}</span>
+        v-show="currentPage >= pages - 2"
+        :class="{ active: currentPage === pages - 1 }"
+        @click="goIndex(pages - 1)"
+        >{{ pages - 1 }}</span
+      >
 
       <!-- 五号位 -->
       <span
         class="card-box"
-        :class="{active: currentPage === pages}"
+        :class="{ active: currentPage === pages }"
         @click="goIndex(pages)"
-      >{{pages}}</span>
+        >{{ pages }}</span
+      >
     </div>
 
     <span
       class="next iconfont icon-jiantou-you"
-      :class="{disabled: currentPage === pages}"
+      :class="{ disabled: currentPage === pages }"
       @click="goNext()"
     >
       <p>下一页</p>
@@ -83,24 +93,24 @@ export default {
     total: {
       // 总长度
       type: Number,
-      default: 10
+      default: 10,
     },
     perPage: {
       // 每页长
       type: Number,
-      default: 10
+      default: 10,
     },
     currentPage: {
       // 当前页
       type: Number,
-      default: 1
-    }
+      default: 1,
+    },
   },
   computed: {
     pages() {
       // 总页数
       return Math.ceil(this.total / this.perPage);
-    }
+    },
   },
   methods: {
     threeNum() {
@@ -136,8 +146,8 @@ export default {
     },
     handleEmit(i) {
       this.$emit("getCurrentPage", i);
-    }
-  }
+    },
+  },
 };
 </script>
 
