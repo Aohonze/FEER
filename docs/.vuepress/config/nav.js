@@ -24,8 +24,8 @@ module.exports = [{
   },
 
   {
-    text: '掘金专栏',
-    link: 'https://juejin.im/user/5e394dcc518825492a71f079/posts',
+    text: '时钟',
+    link: '/clock/',
   },
   {
     text: 'Github',

@@ -17,12 +17,11 @@
       href="https://github.com/xugaoyi/vuepress-theme-vdoing"
       target="_blank"
       title="本站主题"
-    >Vdoing</a>
+      >Vdoing</a
+    >
     <template v-if="footer">
       | Copyright © {{ footer.createYear }}-{{ new Date().getFullYear() }}
-      <span
-        v-html="footer.copyrightInfo"
-      ></span>
+      <span v-html="footer.copyrightInfo"></span>
       <span id="busuanzi_container_site_pv">
         | Visitors
         <span id="busuanzi_value_site_pv"></span>
@@ -39,20 +38,22 @@ export default {
     },
     footer() {
       return this.$themeConfig.footer;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang='stylus'>
 // $mobileSidebarWidth = $sidebarWidth * 0.82
 .footer {
+  background: #000;
   padding: 5rem 1.5rem 2.5rem;
   text-align: center;
-  color: #666;
+  color: #999;
   box-sizing: border-box;
   font-size: 0.85rem;
   transition: all 0.2s ease;
+  z-index: 999;
 
   .icons {
     margin-bottom: 12px;

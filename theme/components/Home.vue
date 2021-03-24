@@ -343,8 +343,8 @@ export default {
         } else {
           // 网格纹背景
           // return "background: rgb(40,40,45) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABOSURBVFhH7c6xCQAgDAVRR9A6E4hLu4uLiWJ7tSnuQcIvr2TRYsw3/zOGGEOMIcYQY4gxxBhiDDGGGEOMIcYQY4gxxBhiDLkx52W4Gn1tuslCtHJvL54AAAAASUVORK5CYII=)";
-          return "background: url(https://cdn.jsdelivr.net/gh/tyrone-wu/PicRepo/bg4.jpg) center center / cover no-repeat";
           // return "background: url(https://cdn.jsdelivr.net/gh/tyrone-wu/PicRepo/bg4.jpg) center center / cover no-repeat";
+          // return "background-color: #000";
         }
       } else if (bannerBg === "none") {
         // 无背景
@@ -382,9 +382,10 @@ export default {
 .home-wrapper {
   .banner {
     width: 100%;
-    min-height: 95vh;
-    margin-top: $navbarHeight;
+    min-height: 500px;
+    // margin-top: $navbarHeight;
     color: $bannerTextColor;
+    background-color: #000;
     position: relative;
     overflow: hidden;
 

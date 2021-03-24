@@ -1,7 +1,11 @@
 <template>
   <div class="categories-wrapper card-box">
-    <router-link to="/categories/" class="title iconfont icon-wenjianjia" title="全部分类">
-      {{ length === 'all' ? '全部分类' : '文章分类' }}
+    <router-link
+      to="/categories/"
+      class="title iconfont icon-wenjianjia"
+      title="全部分类"
+    >
+      {{ length === "all" ? "全部分类" : "文章分类" }}
     </router-link>
 
     <div class="categories">
@@ -9,12 +13,16 @@
         :to="`/categories/?category=${item.key}`"
         v-for="(item, index) in categories"
         :key="index"
-        :class="{active: item.key === category}"
+        :class="{ active: item.key === category }"
       >
-        {{item.key}}
-        <span>{{item.length}}</span>
+        {{ item.key }}
+        <span>{{ item.length }}</span>
       </router-link>
-      <router-link to="/categories/" v-if="length !== 'all' && length < categoriesData.length" class="more">
+      <router-link
+        to="/categories/"
+        v-if="length !== 'all' && length < categoriesData.length"
+        class="more"
+      >
         更多...
       </router-link>
     </div>
@@ -26,78 +34,95 @@ export default {
   props: {
     category: {
       type: String,
-      default: ''
+      default: "",
     },
     categoriesData: {
       type: Array,
-      default: []
+      default: [],
     },
     length: {
       type: [String, Number],
-      default: 'all'
-    }
+      default: "all",
+    },
   },
   computed: {
     categories() {
-      if (this.length === 'all') {
-        return this.categoriesData
+      if (this.length === "all") {
+        return this.categoriesData;
       } else {
-        return this.categoriesData.slice(0, this.length)
+        return this.categoriesData.slice(0, this.length);
+      }
+    },
+  },
+};
+</script>
+
+<style lang='stylus'>
+.categories-wrapper {
+  .title {
+    color: var(--textColor);
+    opacity: 0.9;
+    font-size: 1.2rem;
+  }
+
+  .categories {
+    margin-top: 0.6rem;
+
+    a {
+      display: block;
+      padding: 0.45rem 0.3rem;
+      color: var(--textColor);
+      opacity: 0.8;
+      font-size: 0.95rem;
+      line-height: 0.95rem;
+      position: relative;
+      transition: all 0.3s;
+      border-bottom: 1px solid var(--borderColor);
+      margin-top: -1px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      @media (max-width: $MQMobile) {
+        font-weight: 400;
+      }
+
+      &.more {
+        color: $accentColor;
+      }
+
+      &:hover {
+        color: $accentColor;
+        padding-left: 0.4rem;
+
+        span {
+          opacity: 0.8;
+        }
+      }
+
+      span {
+        float: right;
+        background-color: var(--textColor);
+        color: var(--mainBg);
+        border-radius: 2px;
+        padding: 0 0.1rem;
+        min-width: 1rem;
+        height: 1rem;
+        line-height: 1rem;
+        font-size: 0.65rem;
+        text-align: center;
+        opacity: 0.6;
+        transition: opacity 0.3s;
+      }
+
+      &.active {
+        background: $accentColor;
+        color: var(--mainBg);
+        padding-left: 0.8rem;
+        border-radius: 1px;
+        border-color: transparent;
       }
     }
   }
 }
-</script>
-
-<style lang='stylus'>
-.categories-wrapper 
-  .title
-    color var(--textColor)
-    opacity 0.9
-    font-size 1.2rem
-  .categories
-    margin-top .6rem
-    a
-      display block
-      padding .45rem .3rem
-      color var(--textColor)
-      opacity .8
-      font-size .95rem
-      line-height .95rem
-      position relative
-      transition all .3s
-      border-bottom 1px solid var(--borderColor)
-      margin-top -1px
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      @media (max-width: $MQMobile) 
-        font-weight 400
-      &.more
-        color $accentColor
-      &:hover
-        color $accentColor
-        padding-left .4rem
-        span 
-          opacity .8
-      span 
-        float right 
-        background-color var(--textColor)
-        color var(--mainBg)
-        border-radius 2px
-        padding 0 .1rem
-        min-width 1rem
-        height 1rem
-        line-height 1rem
-        font-size .65rem
-        text-align center
-        opacity .6
-        transition opacity .3s
-      &.active
-        background $accentColor
-        color var(--mainBg)
-        padding-left .8rem
-        border-radius 1px
-        border-color transparent
-        
 </style>
