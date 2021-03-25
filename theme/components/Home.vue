@@ -309,19 +309,6 @@ export default {
         document.body.scrollTop
       );
     },
-    drawDown() {
-      var c = document.getElementById("downCanvas"),
-        cxt = c.getContext("2d");
-      cxt.beginPath();
-      cxt.moveTo(5, 20);
-      cxt.lineTo(15, 30);
-      cxt.lineTo(25, 20);
-      cxt.lineWidth = 1;
-      cxt.strokeStyle = "white";
-      cxt.lineCap = "round";
-      cxt.lineJoin = "round";
-      cxt.stroke();
-    },
   },
 
   computed: {

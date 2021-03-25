@@ -49,8 +49,6 @@ export default {
 
 <style lang="stylus">
 .sidebar {
-  background-color: #fff;
-
   ul {
     padding: 0;
     margin: 0;

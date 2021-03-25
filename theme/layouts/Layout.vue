@@ -12,7 +12,7 @@
     <Sidebar
       :items="sidebarItems"
       @toggle-sidebar="toggleSidebar"
-      v-show="showSidebar"
+      v-if="showSidebar"
     >
       <slot name="sidebar-top" #top />
       <slot name="sidebar-bottom" #bottom />
