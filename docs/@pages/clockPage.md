@@ -1,5 +1,5 @@
 ---
-categoriesPage: true
+clockPage: true
 title: 时钟
 permalink: /clock/
 article: false

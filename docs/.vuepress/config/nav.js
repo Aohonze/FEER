@@ -4,16 +4,20 @@ module.exports = [
 		link: '/',
 	},
 	{
+		text: 'ABOUT',
+		link: '/about/',
+	},
+	{
 		text: 'BLOG',
 		link: '/blog/',
 	},
 	{
-		text: 'CLOCK',
-		link: '/clock/',
+		text: 'CATEGORIES',
+		link: '/categories/',
 	},
 	{
-		text: 'ABOUT',
-		link: '/about/',
+		text: 'CLOCK',
+		link: '/clock/',
 	},
 	{
 		text: 'GITHUB',

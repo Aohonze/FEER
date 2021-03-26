@@ -18,17 +18,16 @@
       <slot name="sidebar-bottom" #bottom />
     </Sidebar>
 
-    <!-- 时钟 -->
-    <!-- <Clock
-      v-if="2"
-      :showHours="true"
-      :showMinutes="true"
-      :showSeconds="false"
-    /> -->
-
     <!-- 首页 -->
     <Home v-if="$page.frontmatter.home" />
 
+    <!-- 时钟 -->
+    <Clock
+      v-else-if="$page.frontmatter.clockPage"
+      :showHours="true"
+      :showMinutes="true"
+      :showSeconds="true"
+    />
     <!-- 分类页 -->
     <CategoriesPage v-else-if="$page.frontmatter.categoriesPage" />
 
@@ -44,7 +43,7 @@
       <slot name="page-bottom" #bottom />
     </Page>
 
-    <Footer />
+    <Footer v-if="!$page.frontmatter.clockPage" />
 
     <Buttons ref="buttons" @toggle-theme-mode="toggleThemeMode" />
 

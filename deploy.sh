@@ -5,7 +5,7 @@ set -e
 
 # 上传仓库
 git add .
-git commit -m "03.25样式更新"
+git commit -m "03.26样式更新"
 git push
 
 # 生成静态文件

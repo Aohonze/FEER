@@ -102,7 +102,7 @@ export default {
 
       span {
         float: right;
-        background-color: var(--textColor);
+        background-color: $accentColor;
         color: var(--mainBg);
         border-radius: 2px;
         padding: 0 0.1rem;
