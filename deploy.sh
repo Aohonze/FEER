@@ -29,8 +29,8 @@ git remote add github https://github.com/Aohonze/Aohonze.github.io.git
 git push -f github master
 
 # 发布到coding
-git remote add coding https://e.coding.net/tyronewu/FEER.git
-git push -f coding master
+# git remote add coding https://e.coding.net/tyronewu/FEER.git
+# git push -f coding master
 
 # 删除GIT相关配置
 rm -rf .git
