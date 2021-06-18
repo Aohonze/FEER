@@ -1,5 +1,5 @@
 <template>
-  <header class="navbar blur">
+  <header class="navbar">
     <SidebarButton @toggle-sidebar="$emit('toggle-sidebar')" />
 
     <router-link :to="$localePath" class="home-link">
@@ -103,6 +103,7 @@ $navbar-horizontal-padding = 1.5rem;
   padding: $navbar-vertical-padding $navbar-horizontal-padding;
   line-height: $navbarHeight - 1.4rem;
   transition: transform 0.3s;
+  background-color: var(--navBg);
 
   a, span, img {
     display: inline-block;
@@ -118,7 +119,7 @@ $navbar-horizontal-padding = 1.5rem;
   .site-name {
     font-size: 1.3rem;
     font-weight: 600;
-    color: var(--textColor);
+    color: white;
     position: relative;
   }
 

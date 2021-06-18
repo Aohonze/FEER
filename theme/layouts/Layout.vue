@@ -21,13 +21,9 @@
     <!-- 首页 -->
     <Home v-if="$page.frontmatter.home" />
 
-    <!-- 时钟 -->
-    <Clock
-      v-else-if="$page.frontmatter.clockPage"
-      :showHours="true"
-      :showMinutes="true"
-      :showSeconds="true"
-    />
+    <!-- 工具 -->
+    <Tools v-else-if="$page.frontmatter.toolsPage" />
+
     <!-- 分类页 -->
     <CategoriesPage v-else-if="$page.frontmatter.categoriesPage" />
 
@@ -37,13 +33,20 @@
     <!-- 归档页 -->
     <ArchivesPage v-else-if="$page.frontmatter.archivesPage" />
 
+    <Clock
+      v-else-if="$page.frontmatter.clockPage"
+      :showHours="true"
+      :showMinutes="true"
+      :showSeconds="true"
+    />
+
     <!-- 文章页或其他页 -->
     <Page v-else :sidebar-items="sidebarItems">
       <slot name="page-top" #top />
       <slot name="page-bottom" #bottom />
     </Page>
 
-    <Footer v-if="!$page.frontmatter.clockPage" />
+    <Footer v-if="shouldShowFooter" />
 
     <Buttons ref="buttons" @toggle-theme-mode="toggleThemeMode" />
 
@@ -63,6 +66,7 @@ import Buttons from "@theme/components/Buttons.vue";
 import Footer from "@theme/components/Footer";
 import BodyBgImg from "@theme/components/BodyBgImg";
 import Clock from "@theme/components/Clock";
+import Tools from "@theme/pages/Tools";
 import { resolveSidebarItems } from "../util";
 import storage from "good-storage"; // 本地存储
 import _ from "lodash";
@@ -83,6 +87,7 @@ export default {
     Buttons,
     BodyBgImg,
     Clock,
+    Tools,
   },
 
   data() {
@@ -121,11 +126,12 @@ export default {
         return false;
       }
       return (
-        this.$title ||
-        themeConfig.logo ||
-        themeConfig.repo ||
-        themeConfig.nav ||
-        this.$themeLocaleConfig.nav
+        (this.$title ||
+          themeConfig.logo ||
+          themeConfig.repo ||
+          themeConfig.nav ||
+          this.$themeLocaleConfig.nav) &&
+        !this.$page.frontmatter.clockPage
       );
     },
 
@@ -162,6 +168,9 @@ export default {
         userPageClass,
       ];
     },
+    shouldShowFooter() {
+      return !this.$page.frontmatter.clockPage;
+    },
   },
   created() {
     const sidebarOpen = this.$themeConfig.sidebarOpen;
@@ -172,7 +181,7 @@ export default {
   beforeMount() {
     this.isSidebarOpenOfclientWidth();
     const mode = storage.get("mode"); // 不放在created是因为vuepress不能在created访问浏览器api，如window
-    if (!mode || mode === "auto") {
+    if (!mode) {
       // 当未切换过模式，或模式处于'跟随系统'时
       this._autoMode();
     } else {

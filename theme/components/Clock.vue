@@ -19,6 +19,7 @@
       <div class="slogan-content">
         <p>明日复明日，明日何其多。我生待明日，万事成蹉跎！</p>
       </div>
+      <router-link to="/tools/"> 返回 </router-link>
     </div>
   </div>
 </template>
@@ -42,7 +43,7 @@ export default {
   data() {
     return {
       hours: new Date().getHours(),
-      minutes: new Date().getHours(),
+      minutes: new Date().getMinutes(),
       seconds: new Date().getSeconds(),
     };
   },
@@ -70,16 +71,16 @@ export default {
   width: 100%;
   height: 100vh;
   // background: url('theme/components/IMG_0269.JPG');
-  background: url('https://cdn.jsdelivr.net/gh/tyrone-wu/PicRepo/bg4.jpg') center center / cover no-repeat; // cdn.jsdelivr.net/gh/tyrone-wu/PicRepo/bg4.jpg) center center / cover no-repeat
+  background: url('https://cdn.jsdelivr.net/gh/tyrone-wu/PicRepo/bg5.jpg') center center / cover no-repeat; // cdn.jsdelivr.net/gh/tyrone-wu/PicRepo/bg4.jpg) center center / cover no-repeat
 
   &-cover {
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
+    // background-color: rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
   }
 
   .time-content {
@@ -97,6 +98,7 @@ export default {
       font-weight: bolder;
       color: white;
       background-color: #212121;
+      opacity: 0.9;
       border-radius: 15px;
 
       &:not(:last-Child) {
@@ -105,8 +107,8 @@ export default {
 
       .card-line {
         position: absolute;
-        width: 398px;
-        border: 2px solid #000;
+        width: 396px;
+        border-top: 4px solid #000;
       }
     }
   }

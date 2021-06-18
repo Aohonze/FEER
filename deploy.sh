@@ -5,7 +5,7 @@ set -e
 
 # 上传仓库
 git add .
-git commit -m "03.26样式更新"
+git commit -m "21.06.18"
 git push
 
 # 生成静态文件
@@ -24,8 +24,8 @@ cp /Users/wutengda/Documents/GitHub/FEER/README.md /Users/wutengda/Documents/Git
 # 推送到git-pages
 git init
 git add .
-git commit -m '修改文章'
-git remote add github https://github.com/Tyrone-Wu/tyrone-wu.github.io.git
+git commit -m '21.06.18'
+git remote add github https://github.com/Aohonze/Aohonze.github.io.git
 git push -f github master
 
 # 发布到coding

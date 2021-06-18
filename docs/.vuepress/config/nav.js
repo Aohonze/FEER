@@ -4,10 +4,6 @@ module.exports = [
 		link: '/',
 	},
 	{
-		text: 'ABOUT',
-		link: '/about/',
-	},
-	{
 		text: 'BLOG',
 		link: '/blog/',
 	},
@@ -16,11 +12,15 @@ module.exports = [
 		link: '/categories/',
 	},
 	{
-		text: 'CLOCK',
-		link: '/clock/',
+		text: 'TOOLS',
+		link: '/tools/',
+	},
+	{
+		text: 'ABOUT',
+		link: '/about/',
 	},
 	{
 		text: 'GITHUB',
-		link: 'https://github.com/Tyrone-Wu/Tyrone-Wu.github.io',
+		link: 'https://github.com/Aohonze/Aohonze.github.io',
 	},
 ];

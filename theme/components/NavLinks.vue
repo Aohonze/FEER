@@ -124,6 +124,7 @@ export default {
     display: inline-block;
     margin-left: 2rem;
     line-height: 2rem;
+    color: white;
 
     &:first-child {
       margin-left: 0;
@@ -163,12 +164,12 @@ export default {
     &:hover {
       transition: color 0.1s ease;
       padding-bottom: 5px;
-      color: $accentColor;
+      color: white;
     }
 
     &.router-link-active {
       padding-bottom: 5px;
-      border-bottom: 2px solid lighten($accentColor, 8%);
+      border-bottom: 2px solid white;
     }
   }
 }

@@ -248,7 +248,7 @@ export default {
     cursor: text;
     width: 0;
     height: 2rem;
-    color: var(--textColor);
+    color: $arrowBgColor;
     display: inline-block;
     font-size: 0.9rem;
     line-height: 2rem;
@@ -267,7 +267,7 @@ export default {
       border-left: none;
       border-right: none;
       border-bottom: 2px solid;
-      border-color: $accentColor;
+      border-color: $arrowBgColor;
     }
   }
 
@@ -275,7 +275,7 @@ export default {
     background: var(--bg, #fff);
     width: 20rem;
     position: absolute;
-    top: 1.5rem;
+    top: 3rem;
     padding: 0.4rem;
     list-style-type: none;
 

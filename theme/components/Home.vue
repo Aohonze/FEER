@@ -21,13 +21,7 @@
           <h1 v-if="homeData.heroText !== null" id="main-title">
             {{ homeData.heroText || $title || "Hello" }}
           </h1>
-          <p class="description">
-            {{
-              homeData.tagline ||
-              $description ||
-              "Welcome to your VuePress site"
-            }}
-          </p>
+          <p class="description"></p>
           <p class="action" v-if="homeData.actionText && homeData.actionLink">
             <NavLink class="action-button" :item="actionLink" />
           </p>
@@ -240,6 +234,8 @@ export default {
 
     // 向下指针
     // this.drawDown();
+
+    this.typeSlogan();
   },
   beforeDestroy() {
     clearTimeout(this.playTimer);
@@ -262,6 +258,18 @@ export default {
     },
   },
   methods: {
+    typeSlogan() {
+      const dom = document.querySelector(".description");
+      const data = this.homeData.tagline.split("");
+      let index = 0;
+      function writing(index) {
+        if (index < data.length) {
+          dom.innerHTML += data[index];
+          setTimeout(writing.bind(this), 200, ++index);
+        }
+      }
+      writing(index);
+    },
     init() {
       clearTimeout(this.playTimer);
       this.slide = new BScroll(this.$refs.slide, {
@@ -370,9 +378,9 @@ export default {
   .banner {
     width: 100%;
     min-height: 500px;
-    // margin-top: $navbarHeight;
+    margin-top: $navbarHeight;
     color: $bannerTextColor;
-    background-color: #000;
+    background-color: var(--navBg);
     position: relative;
     overflow: hidden;
 
@@ -404,7 +412,7 @@ export default {
         }
 
         .description {
-          max-width: 40rem;
+          // max-width: 40rem;
           font-size: 1.1rem;
           line-height: 1.3;
           opacity: 0.9;
