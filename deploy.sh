@@ -5,7 +5,7 @@ set -e
 
 # 上传仓库
 git add .
-git commit -m "21.06.18"
+git commit -m "21.06.19"
 git push
 
 # 生成静态文件
