@@ -19,7 +19,7 @@
       <div class="slogan-content">
         <p>明日复明日，明日何其多。我生待明日，万事成蹉跎！</p>
       </div>
-      <router-link to="/tools/"> 返回 </router-link>
+      <router-link to="/tools/" class="back"> X </router-link>
     </div>
   </div>
 </template>
@@ -120,6 +120,16 @@ export default {
     width: 1000px;
     height: 100px;
     color: #fff;
+  }
+
+  .back {
+    color: #fff;
+    opacity: 0.9;
+    transform: scale(2.5);
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
 }
 </style>

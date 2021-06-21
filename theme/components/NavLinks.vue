@@ -112,10 +112,8 @@ export default {
     color: inherit;
     font-weight: 350;
 
-    &:hover {
-      // color: $accentColor;
-      // margin-bottom: -2px;
-      // border-bottom: 2px solid lighten($accentColor, 8%);
+    &:hover, &.router-link-active {
+      color: var(--navTextColor);
     }
   }
 
@@ -156,18 +154,12 @@ export default {
 @media (min-width: $MQMobile) {
   .nav-links a {
     &:hover, &.router-link-active {
-      color: var(--textColor);
+      color: var(--navTextColor);
     }
   }
 
   .nav-item > a:not(.external) {
-    &:hover {
-      transition: color 0.1s ease;
-      padding-bottom: 5px;
-      color: white;
-    }
-
-    &.router-link-active {
+    &:hover, &.router-link-active {
       padding-bottom: 5px;
       border-bottom: 2px solid white;
     }

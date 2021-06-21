@@ -4,13 +4,12 @@
       to="/categories/"
       class="title iconfont icon-wenjianjia"
       title="全部分类"
+      >{{ length === "all" ? "全部分类" : "文章分类" }}</router-link
     >
-      {{ length === "all" ? "全部分类" : "文章分类" }}
-    </router-link>
 
     <div class="categories">
       <router-link
-        :to="`/categories/?category=${item.key}`"
+        :to="`/categories/?category=${encodeURIComponent(item.key)}`"
         v-for="(item, index) in categories"
         :key="index"
         :class="{ active: item.key === category }"
@@ -23,7 +22,7 @@
         v-if="length !== 'all' && length < categoriesData.length"
         class="more"
       >
-        更多...
+        更多 ...
       </router-link>
     </div>
   </div>
@@ -63,6 +62,11 @@ export default {
     color: var(--textColor);
     opacity: 0.9;
     font-size: 1.2rem;
+    padding: 0 0.95rem;
+
+    &::before {
+      margin-right: 0.3rem;
+    }
   }
 
   .categories {
@@ -70,14 +74,14 @@ export default {
 
     a {
       display: block;
-      padding: 0.45rem 0.3rem;
+      padding: 8px 0.95rem 7px 0.95rem;
       color: var(--textColor);
       opacity: 0.8;
       font-size: 0.95rem;
       line-height: 0.95rem;
       position: relative;
-      transition: all 0.3s;
-      border-bottom: 1px solid var(--borderColor);
+      transition: all 0.2s;
+      border-left: 2px solid transparent;
       margin-top: -1px;
       overflow: hidden;
       white-space: nowrap;
@@ -88,12 +92,13 @@ export default {
       }
 
       &.more {
-        color: $accentColor;
+        // color $accentColor
       }
 
-      &:hover {
+      &:not(.active):hover {
         color: $accentColor;
-        padding-left: 0.4rem;
+        background: #f8f8f8;
+        border-color: $accentColor;
 
         span {
           opacity: 0.8;
@@ -102,14 +107,14 @@ export default {
 
       span {
         float: right;
-        background-color: $accentColor;
+        background-color: var(--textColor);
         color: var(--mainBg);
-        border-radius: 2px;
-        padding: 0 0.1rem;
+        border-radius: 5px;
+        padding: 0 0.13rem;
         min-width: 1rem;
         height: 1rem;
         line-height: 1rem;
-        font-size: 0.65rem;
+        font-size: 0.6rem;
         text-align: center;
         opacity: 0.6;
         transition: opacity 0.3s;
@@ -124,5 +129,9 @@ export default {
       }
     }
   }
+}
+
+.theme-mode-dark .categories-wrapper .categories a:not(.active):hover, .theme-mode-read .categories-wrapper .categories a:not(.active):hover {
+  background: var(--customBlockBg);
 }
 </style>

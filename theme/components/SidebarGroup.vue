@@ -14,7 +14,7 @@
       class="sidebar-heading clickable"
       :class="{
         open,
-        'active': isActive($route, item.path)
+        active: isActive($route, item.path)
       }"
       :to="item.path"
       @click.native="$emit('toggle')"
@@ -23,8 +23,8 @@
       <span
         class="arrow"
         v-if="collapsable"
-        :class="open ? 'down' : 'right'">
-      </span>
+        :class="open ? 'down' : 'right'"
+      ></span>
     </router-link>
 
     <p
@@ -37,8 +37,8 @@
       <span
         class="arrow"
         v-if="collapsable"
-        :class="open ? 'down' : 'right'">
-      </span>
+        :class="open ? 'down' : 'right'"
+      ></span>
     </p>
 
     <DropdownTransition>
@@ -46,7 +46,8 @@
         class="sidebar-group-items"
         :items="item.children"
         v-if="open || !collapsable"
-        :sidebarDepth="item.sidebarDepth"
+        :sidebar-depth="item.sidebarDepth"
+        :initial-open-group-index="item.initialOpenGroupIndex"
         :depth="depth + 1"
       />
     </DropdownTransition>
@@ -81,24 +82,23 @@ export default {
   &.is-sub-group
     padding-left 0
     & > .sidebar-heading
-      font-size 0.95em
+      font-size 1.01em
       line-height 1.4
-      font-weight normal
+      font-weight bold
       padding-left 2rem
       &:not(.clickable)
-        opacity 0.5
+        // opacity 0.9
     & > .sidebar-group-items
       padding-left 1rem
       & > li > .sidebar-link
-        font-size: 0.95em;
+        font-size 0.98em
         border-left none
   &.depth-2
     & > .sidebar-heading
       border-left none
-
 .sidebar-heading
   color var(--textColor)
-  transition color .15s ease
+  transition color 0.15s ease
   cursor pointer
   font-size 1.1em
   font-weight bold
@@ -121,9 +121,8 @@ export default {
       border-left-color $accentColor
     &:hover
       color $accentColor
-
 .sidebar-group-items
-  transition height .1s ease-out
+  transition height 0.1s ease-out
   font-size 0.95em
   overflow hidden
 </style>

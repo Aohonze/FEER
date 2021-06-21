@@ -1,7 +1,7 @@
 <template>
   <div class="pagination">
     <span
-      class="prev iconfont icon-jiantou-zuo"
+      class="card-box prev iconfont icon-jiantou-zuo"
       :class="{ disabled: currentPage === 1 }"
       @click="goPrex()"
     >
@@ -78,7 +78,7 @@
     </div>
 
     <span
-      class="next iconfont icon-jiantou-you"
+      class="card-box next iconfont icon-jiantou-you"
       :class="{ disabled: currentPage === pages }"
       @click="goNext()"
     >
@@ -206,14 +206,14 @@ export default {
 
     &.prev {
       left: 0;
-      border-top-right-radius: 32px;
-      border-bottom-right-radius: 32px;
+      border-top-left-radius: 32px;
+      border-bottom-left-radius: 32px;
     }
 
     &.next {
       right: 0;
-      border-top-left-radius: 32px;
-      border-bottom-left-radius: 32px;
+      border-top-right-radius: 32px;
+      border-bottom-right-radius: 32px;
 
       &::before {
         float: right;

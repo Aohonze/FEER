@@ -1,5 +1,5 @@
 <template>
-  <header class="navbar">
+  <header class="navbar blur">
     <SidebarButton @toggle-sidebar="$emit('toggle-sidebar')" />
 
     <router-link :to="$localePath" class="home-link">
@@ -119,7 +119,7 @@ $navbar-horizontal-padding = 1.5rem;
   .site-name {
     font-size: 1.3rem;
     font-weight: 600;
-    color: white;
+    color: var(--navTextColor);
     position: relative;
   }
 
@@ -136,6 +136,29 @@ $navbar-horizontal-padding = 1.5rem;
     .search-box {
       flex: 0 0 auto;
       vertical-align: top;
+
+      input {
+        width: 0;
+        background-color: transparent;
+        color: var(--navTextColor);
+        border: none;
+        border-radius: 0;
+
+        &:focus {
+          width: 10rem;
+          border-bottom: 1px solid var(--navTextColor);
+          transition: all 0.6s;
+        }
+
+        @media (max-width: $MQNarrow) {
+          border-color: transparent;
+        }
+      }
+
+      ul {
+        margin-top: 32px;
+        border-radius: 2px;
+      }
     }
   }
 }

@@ -16,22 +16,22 @@
           <img
             v-if="homeData.heroImage"
             :src="$withBase(homeData.heroImage)"
-            :alt="homeData.heroAlt || 'hero'"
+            :alt="homeData.heroAlt"
           />
-          <h1 v-if="homeData.heroText !== null" id="main-title">
-            {{ homeData.heroText || $title || "Hello" }}
+          <h1 v-if="homeData.heroText" id="main-title">
+            {{ homeData.heroText }}
           </h1>
-          <p class="description"></p>
+          <p v-if="homeData.tagline" class="description">
+            <!-- {{ homeData.tagline }} -->
+          </p>
+
           <p class="action" v-if="homeData.actionText && homeData.actionLink">
             <NavLink class="action-button" :item="actionLink" />
           </p>
         </header>
 
         <!-- PC端features块 s -->
-        <div
-          class="features"
-          v-if="homeData.features && homeData.features.length && !isMQMobile"
-        >
+        <div class="features" v-if="hasFeatures && !isMQMobile">
           <div
             class="feature"
             v-for="(feature, index) in homeData.features"
@@ -64,11 +64,7 @@
 
       <!-- 移动端features块 s -->
       <!-- isMQMobile放到v-if上线后会报错 -->
-      <div
-        class="slide-banner"
-        v-if="homeData.features && homeData.features.length"
-        v-show="isMQMobile"
-      >
+      <div class="slide-banner" v-if="hasFeatures" v-show="isMQMobile">
         <div class="banner-wrapper">
           <div class="slide-banner-scroll" ref="slide">
             <div class="slide-banner-wrapper">
@@ -111,12 +107,6 @@
         </div>
       </div>
       <!-- 移动端features块 e -->
-
-      <!-- 向下指示图标 s-->
-      <div id="down">
-        <canvas id="downCanvas" width="30" height="30"></canvas>
-      </div>
-      <!-- 向下指示图标 e -->
     </div>
     <!-- banner块 e -->
 
@@ -126,7 +116,7 @@
         <UpdateArticle
           class="card-box"
           v-if="homeData.postList === 'simple'"
-          :length="5"
+          :length="homeData.simplePostListLength || 10"
         />
 
         <!-- 详情版文章列表 -->
@@ -161,6 +151,11 @@
           :tagsData="$categoriesAndTags.tags"
           :length="30"
         />
+        <div
+          class="custom-html-box card-box"
+          v-if="homeSidebarB"
+          v-html="homeSidebarB"
+        ></div>
       </template>
     </MainLayout>
   </div>
@@ -186,14 +181,73 @@ export default {
   data() {
     return {
       isMQMobile: false,
+
       slide: null,
       currentPageIndex: 0,
       playTimer: 0,
       mark: 0,
+
       total: 0, // 总长
       perPage: 10, // 每页长
       currentPage: 1, // 当前页
     };
+  },
+  computed: {
+    homeData() {
+      return {
+        ...this.$page.frontmatter,
+      };
+    },
+    hasFeatures() {
+      return !!(this.homeData.features && this.homeData.features.length);
+    },
+    homeSidebarB() {
+      const { htmlModules } = this.$themeConfig;
+      return htmlModules ? htmlModules.homeSidebarB : "";
+    },
+    showBanner() {
+      // 当分页不在第一页时隐藏banner栏
+      return this.$route.query.p &&
+        this.$route.query.p != 1 &&
+        (!this.homeData.postList || this.homeData.postList === "detailed")
+        ? false
+        : true;
+    },
+    bannerBgStyle() {
+      let bannerBg = this.homeData.bannerBg;
+      if (!bannerBg || bannerBg === "auto") {
+        // 默认
+        if (this.$themeConfig.bodyBgImg) {
+          // 当有bodyBgImg时，不显示背景
+          return "";
+        }
+        //  else {
+        // 网格纹背景
+        // return "background: rgb(40,40,45) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABOSURBVFhH7c6xCQAgDAVRR9A6E4hLu4uLiWJ7tSnuQcIvr2TRYsw3/zOGGEOMIcYQY4gxxBhiDDGGGEOMIcYQY4gxxBhiDLkx52W4Gn1tuslCtHJvL54AAAAASUVORK5CYII=)";
+        // }
+      } else if (bannerBg === "none") {
+        // 无背景
+        if (this.$themeConfig.bodyBgImg) {
+          return "";
+        } else {
+          return "background: var(--mainBg);color: var(--textColor)";
+        }
+      } else if (bannerBg.indexOf("background") > -1) {
+        // 自定义背景样式
+        return bannerBg;
+      } else if (bannerBg.indexOf(".") > -1) {
+        // 大图
+        return `background: url(${this.$withBase(
+          bannerBg
+        )}) center center / cover no-repeat`;
+      }
+    },
+    actionLink() {
+      return {
+        link: this.homeData.actionLink,
+        text: this.homeData.actionText,
+      };
+    },
   },
   components: {
     NavLink,
@@ -217,24 +271,26 @@ export default {
       this.currentPage = Number(this.$route.query.p);
     }
 
-    if (this.isMQMobile && (!this.$route.query.p || this.$route.query.p == 1)) {
+    if (
+      this.hasFeatures &&
+      this.isMQMobile &&
+      (!this.$route.query.p || this.$route.query.p == 1)
+    ) {
       this.init();
     }
 
-    window.addEventListener("resize", () => {
-      this.isMQMobile =
-        window.innerWidth < MOBILE_DESKTOP_BREAKPOINT ? true : false;
-      if (this.isMQMobile && !this.slide && !this.mark) {
-        this.mark++;
-        setTimeout(() => {
-          this.init();
-        }, 60);
-      }
-    });
-
-    // 向下指针
-    // this.drawDown();
-
+    if (this.hasFeatures) {
+      window.addEventListener("resize", () => {
+        this.isMQMobile =
+          window.innerWidth < MOBILE_DESKTOP_BREAKPOINT ? true : false;
+        if (this.isMQMobile && !this.slide && !this.mark) {
+          this.mark++;
+          setTimeout(() => {
+            this.init();
+          }, 60);
+        }
+      });
+    }
     this.typeSlogan();
   },
   beforeDestroy() {
@@ -249,7 +305,7 @@ export default {
         this.currentPage = Number(this.$route.query.p);
       }
 
-      if (this.currentPage === 1 && this.isMQMobile) {
+      if (this.hasFeatures && this.currentPage === 1 && this.isMQMobile) {
         setTimeout(() => {
           this.slide && this.slide.destroy();
           this.init();
@@ -316,58 +372,6 @@ export default {
         document.documentElement.scrollTop ||
         document.body.scrollTop
       );
-    },
-  },
-
-  computed: {
-    showBanner() {
-      // 当分页不在第一页时隐藏banner栏
-      return this.$route.query.p &&
-        this.$route.query.p != 1 &&
-        (!this.homeData.postList || this.homeData.postList === "detailed")
-        ? false
-        : true;
-    },
-    bannerBgStyle() {
-      let bannerBg = this.homeData.bannerBg;
-      if (!bannerBg || bannerBg === "auto") {
-        // 默认
-        if (this.$themeConfig.bodyBgImg) {
-          // 当有bodyBgImg时，不显示背景
-          return "";
-        } else {
-          // 网格纹背景
-          // return "background: rgb(40,40,45) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABOSURBVFhH7c6xCQAgDAVRR9A6E4hLu4uLiWJ7tSnuQcIvr2TRYsw3/zOGGEOMIcYQY4gxxBhiDDGGGEOMIcYQY4gxxBhiDLkx52W4Gn1tuslCtHJvL54AAAAASUVORK5CYII=)";
-          // return "background: url(https://cdn.jsdelivr.net/gh/tyrone-wu/PicRepo/bg4.jpg) center center / cover no-repeat";
-          // return "background-color: #000";
-        }
-      } else if (bannerBg === "none") {
-        // 无背景
-        if (this.$themeConfig.bodyBgImg) {
-          return "";
-        } else {
-          return "background: var(--mainBg);color: var(--textColor)";
-        }
-      } else if (bannerBg.indexOf("background") > -1) {
-        // 自定义背景样式
-        return bannerBg;
-      } else if (bannerBg.indexOf(".") > -1) {
-        // 大图
-        return `background: url(${this.$withBase(
-          bannerBg
-        )}) center center / cover no-repeat`;
-      }
-    },
-    homeData() {
-      return {
-        ...this.$page.frontmatter,
-      };
-    },
-    actionLink() {
-      return {
-        link: this.homeData.actionLink,
-        text: this.homeData.actionText,
-      };
     },
   },
 };
@@ -438,7 +442,7 @@ export default {
       // pc端features
       .features {
         padding: 2rem 0;
-        margin-top: 4rem;
+        margin-top: 2.5rem;
         display: flex;
         flex-wrap: wrap;
         align-items: flex-start;
@@ -558,10 +562,6 @@ export default {
   }
 
   // 分页不在第一页时，隐藏banner栏
-  .main-wrapper {
-    margin-top: 2rem;
-  }
-
   .banner.hide-banner {
     display: none;
 
@@ -571,6 +571,8 @@ export default {
   }
 
   .main-wrapper {
+    margin-top: 2rem;
+
     .main-left {
       .card-box {
         margin-bottom: 0.9rem;
@@ -591,6 +593,13 @@ export default {
         &>:last-child {
           padding-bottom: 2rem;
         }
+      }
+    }
+
+    .main-right {
+      .custom-html-box {
+        padding: 0;
+        overflow: hidden;
       }
     }
   }

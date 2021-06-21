@@ -138,6 +138,9 @@ export function resolveSidebarItems (page, regularPath, site, localePath) {
     return []
   } else {
     const { base, config } = resolveMatchingConfig(regularPath, sidebarConfig)
+    if (config === 'auto') {
+      return resolveHeaders(page)
+    }
     return config
       ? config.map(item => resolveItem(item, pages, base))
       : []
@@ -238,6 +241,7 @@ function resolveItem (item, pages, base, groupDepth = 1) {
       path: item.path,
       title: item.title,
       sidebarDepth: item.sidebarDepth,
+      initialOpenGroupIndex: item.initialOpenGroupIndex,
       children: children.map(child => resolveItem(child, pages, base, groupDepth + 1)),
       collapsable: item.collapsable !== false
     }
@@ -246,27 +250,32 @@ function resolveItem (item, pages, base, groupDepth = 1) {
 
 
 // 类型判断
-export function type(o){
+export function type (o) {
   const s = Object.prototype.toString.call(o)
   return s.match(/\[object (.*?)\]/)[1].toLowerCase()
 }
 
 // 日期格式化(只获取年月日)
-export function dateFormat(date) {
+export function dateFormat (date) {
   if (!(date instanceof Date)) {
     date = new Date(date)
   }
-  return `${date.getUTCFullYear()}-${zero(date.getUTCMonth()+1)}-${zero(date.getUTCDate())}`
+  return `${date.getUTCFullYear()}-${zero(date.getUTCMonth() + 1)}-${zero(date.getUTCDate())}`
 }
 
 // 小于10补0
-export function zero(d){
-  return d.toString().padStart(2,'0')
+export function zero (d) {
+  return d.toString().padStart(2, '0')
 }
 
 // 获取时间的时间戳
 export function getTimeNum (post) {
-  return new Date(post.frontmatter.date || post.lastUpdated).getTime()
+  let dateStr = post.frontmatter.date || post.lastUpdated || new Date()
+  let date = new Date(dateStr)
+  if (date == "Invalid Date" && dateStr) { // 修复new Date()在Safari下出现Invalid Date的问题
+    date = new Date(dateStr?.replace(/-/g, '/'))
+  }
+  return date.getTime()
 }
 
 // 比对时间
@@ -275,8 +284,8 @@ export function compareDate (a, b) {
 }
 
 // 将特殊符号编码（应用于url）
-export function encodeUrl(str) {
+export function encodeUrl (str) {
   str = str + ''
-  str = str.replace(/ |((?=[\x21-\x7e]+)[^A-Za-z0-9])/g, '-')
+  str = str?.replace(/ |((?=[\x21-\x7e]+)[^A-Za-z0-9])/g, '-')
   return str
 }

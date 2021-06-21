@@ -53,7 +53,8 @@ export default {
             ),
             handleSelected: (input, event, suggestion) => {
               const { pathname, hash } = new URL(suggestion.url);
-              this.$router.push(`${pathname}${hash}`);
+              const _hash = decodeURIComponent(hash);
+              this.$router.push(`${routepath}${_hash}`);
             },
           })
         );
